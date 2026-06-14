@@ -1,0 +1,62 @@
+aid: stellate
+name: Stellate
+description: |
+  Stellate is a GraphQL edge caching and API management platform that caches
+  GraphQL query results at 60 data centers worldwide, reducing origin traffic
+  by up to 95% and delivering responses in milliseconds. The platform provides
+  edge caching, real-time metrics and insights, rate limiting, and security
+  features to help teams scale, protect, and optimize their GraphQL APIs.
+type: Index
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://stellate.co
+baseURL: https://graph.stellate.co
+created: 2026-06-14
+modified: 2026-06-14
+specificationVersion: '0.19'
+tags:
+  - GraphQL
+  - CDN
+  - Edge Caching
+  - API Management
+  - Rate Limiting
+  - GraphQL Security
+  - Developer Tools
+apis:
+  - aid: stellate:graphql-api
+    name: Stellate GraphQL API
+    description: |
+      The Stellate public GraphQL API at graph.stellate.co enables programmatic
+      access to organizational and service-level data. It supports querying
+      organizations and their associated services, with authentication via
+      bearer token. A 1000-node complexity limit is enforced to maintain
+      reliability during early access.
+    tags:
+      - GraphQL
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://stellate.co/docs/reference/public-api
+    baseURL: https://graph.stellate.co
+    properties:
+      - url: https://stellate.co/docs/reference/public-api
+        type: Documentation
+      - url: graphql/stellate-graphql.md
+        type: GraphQL
+common:
+  - url: https://stellate.co
+    type: Website
+  - url: https://stellate.co/docs
+    type: Documentation
+  - url: https://www.linkedin.com/company/stellatehq
+    type: LinkedIn
+  - url: https://github.com/StellateHQ
+    type: GitHubOrganization
+  - url: https://stellate.co/pricing
+    type: Pricing
+  - url: plans/stellate-plans.md
+    type: Plans
+  - url: rate-limits/stellate-rate-limits.md
+    type: RateLimits
+  - url: finops/stellate-finops.md
+    type: FinOps
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

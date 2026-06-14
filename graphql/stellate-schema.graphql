@@ -1,0 +1,1212 @@
+"""An Alert allows you to configure when to send alerts, which criteria trigger alerts in the first place, and who should be notified. Learn more in our [`Alert` documentation](https://docs.stellate.co/docs/alerts)"""
+type Alert implements Node {
+  filters: [AlertFilter!]!
+  id: ID!
+  interval: AlertInterval!
+  """Number of times this alert has fired in the specified timeframe."""
+  invocationCount(since: AlertLastSeenInterval): Int!
+  name: String
+  notifications: [AlertNotification!]!
+  threshold: Float!
+  thresholdDirection: AlertThresholdDirection!
+  thresholdType: AlertThresholdType!
+  type: AlertType!
+}
+
+"""Allows to include or exclude specific GraphQL errors based on the error message or error code."""
+type AlertFilter {
+  id: ID!
+  scope: AlertFilterScope!
+  type: AlertFilterType!
+  value: String!
+}
+
+enum AlertFilterScope {
+  EXCLUDE
+  INCLUDE
+}
+
+enum AlertFilterType {
+  CODE
+  PATH
+}
+
+enum AlertInterval {
+  T_1_MINUTE
+  T_1_HOUR
+  T_5_MINUTES
+  T_10_MINUTES
+  T_12_HOURS
+  T_15_MINUTES
+  T_24_HOURS
+  T_30_MINUTES
+}
+
+enum AlertLastSeenInterval {
+  T_1_DAY
+  T_1_MONTH
+  T_1_WEEK
+}
+
+type AlertNotification {
+  """Only available if `type` is `CustomEmail`"""
+  email: String
+  """Only available if `type` is `Email`"""
+  emailTo: User
+  id: ID!
+  type: AlertNotificationType!
+}
+
+"""You can learn more about how to configure your notificatin targets in our [`Alert` documentation](https://docs.stellate.co/docs/alerts#notification-targets)"""
+enum AlertNotificationType {
+  CUSTOM_EMAIL
+  EMAIL
+  SLACK
+}
+
+enum AlertThresholdDirection {
+  ABOVE
+  BELOW
+}
+
+enum AlertThresholdType {
+  ABSOLUTE
+  RELATIVE
+}
+
+enum AlertType {
+  ERROR_4XX
+  ERROR_5XX
+  ERROR_GRAPHQL
+  MUTATION_DURATION_P95
+  QUERY_DURATION_P95
+}
+
+"""Indicator of cache activity for a given request."""
+enum CacheState {
+  HIT
+  MISS
+  PARTIAL
+  PASS
+}
+
+input CacheStateFilterConstraint {
+  NOT: NegatedCacheStateFilterConstraint
+  equal: CacheState
+  in: [CacheState!]
+}
+
+input ConfigRuleFilterConstraint {
+  operationHashes: [String!]
+  types: Json
+}
+
+"""Two letter continent code (CC)"""
+enum ContinentCode {
+  AF
+  AN
+  AS
+  EU
+  NA
+  OC
+  SA
+  UNKNOWN
+}
+
+input ContinentCodeFilterConstraint {
+  NOT: NegatedContinentCodeFilterConstraint
+  equal: ContinentCode
+  in: [ContinentCode!]
+}
+
+"""ISO 3166 Alpha 2 country code."""
+enum CountryCode {
+  AD
+  AE
+  AF
+  AG
+  AI
+  AL
+  AM
+  AO
+  AQ
+  AR
+  AS
+  AT
+  AU
+  AW
+  AX
+  AZ
+  BA
+  BB
+  BD
+  BE
+  BF
+  BG
+  BH
+  BI
+  BJ
+  BL
+  BM
+  BN
+  BO
+  BQ
+  BR
+  BS
+  BT
+  BV
+  BW
+  BY
+  BZ
+  CA
+  CC
+  CD
+  CF
+  CG
+  CH
+  CI
+  CK
+  CL
+  CM
+  CN
+  CO
+  CR
+  CU
+  CV
+  CW
+  CX
+  CY
+  CZ
+  DE
+  DJ
+  DK
+  DM
+  DO
+  DZ
+  EC
+  EE
+  EG
+  EH
+  ER
+  ES
+  ET
+  FI
+  FJ
+  FK
+  FM
+  FO
+  FR
+  GA
+  GB
+  GD
+  GE
+  GF
+  GG
+  GH
+  GI
+  GL
+  GM
+  GN
+  GP
+  GQ
+  GR
+  GS
+  GT
+  GU
+  GW
+  GY
+  HK
+  HM
+  HN
+  HR
+  HT
+  HU
+  ID
+  IE
+  IL
+  IM
+  IN
+  IO
+  IQ
+  IR
+  IS
+  IT
+  JE
+  JM
+  JO
+  JP
+  KE
+  KG
+  KH
+  KI
+  KM
+  KN
+  KP
+  KR
+  KW
+  KY
+  KZ
+  LA
+  LB
+  LC
+  LI
+  LK
+  LR
+  LS
+  LT
+  LU
+  LV
+  LY
+  MA
+  MC
+  MD
+  ME
+  MF
+  MG
+  MH
+  MK
+  ML
+  MM
+  MN
+  MO
+  MP
+  MQ
+  MR
+  MS
+  MT
+  MU
+  MV
+  MW
+  MX
+  MY
+  MZ
+  NA
+  NC
+  NE
+  NF
+  NG
+  NI
+  NL
+  NO
+  NP
+  NR
+  NU
+  NZ
+  OM
+  PA
+  PE
+  PF
+  PG
+  PH
+  PK
+  PL
+  PM
+  PN
+  PR
+  PS
+  PT
+  PW
+  PY
+  QA
+  RE
+  RO
+  RS
+  RU
+  RW
+  SA
+  SB
+  SC
+  SD
+  SE
+  SG
+  SH
+  SI
+  SJ
+  SK
+  SL
+  SM
+  SN
+  SO
+  SR
+  SS
+  ST
+  SV
+  SX
+  SY
+  SZ
+  TC
+  TD
+  TF
+  TG
+  TH
+  TJ
+  TK
+  TL
+  TM
+  TN
+  TO
+  TR
+  TT
+  TV
+  TW
+  TZ
+  UA
+  UG
+  UM
+  UNKNOWN
+  US
+  UY
+  UZ
+  VA
+  VC
+  VE
+  VG
+  VI
+  VN
+  VU
+  WF
+  WS
+  XK
+  YE
+  YT
+  ZA
+  ZM
+  ZW
+}
+
+input CountryCodeFilterConstraint {
+  NOT: NegatedCountryCodeFilterConstraint
+  equal: CountryCode
+  in: [CountryCode!]
+}
+
+input CustomAttributeFilterConstraint {
+  NOT: NegatedStringFilterConstraint
+  equal: String
+  in: [String!]
+  name: String!
+}
+
+"""A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."""
+scalar DateTime
+
+"""A list of all Fastly points-of-presence that are currently in service (see https://developer.fastly.com/learning/concepts/pop/#complete-list-of-pops)"""
+enum EdgeLocation {
+  """Ghana (5.573, -0.203)"""
+  ACC
+  """Adelaide (-34.9285, 138.6007)"""
+  ADL
+  """Dallas (Metro) (32.896828, -97.037997)"""
+  ADS
+  """Auckland (-37.008056, 174.791667)"""
+  AKL
+  """Amsterdam (52.308613, 4.763889)"""
+  AMS
+  """Atlanta (33.636719, -84.428067)"""
+  ATL
+  """Seattle (Metro) (47.449, -122.309306)"""
+  BFI
+  """Bangkok (13.756, 100.501)"""
+  BKK
+  """Stockholm (59.354372, 17.94165)"""
+  BMA
+  """Brisbane (-27.384167, 153.1175)"""
+  BNE
+  """Bogota (4.711, -74.072)"""
+  BOG
+  """Mumbai (18.975, 72.825833)"""
+  BOM
+  """Boston (42.364347, -71.005181)"""
+  BOS
+  """Brussels (50.871, 4.476)"""
+  BRU
+  """Los Angeles (Metro) (34.198312, -118.357404)"""
+  BUR
+  """Kolkata (22.588, 88.393)"""
+  CCU
+  """Sao Paulo (-23.498, -46.815)"""
+  CGH
+  """Christchurch (-43.532, 172.636)"""
+  CHC
+  """Chicago (Metro) (41.863, -87.641)"""
+  CHI
+  """Columbus (40.116, -83.002)"""
+  CMH
+  """Copenhagen (55.728081, 12.37752)"""
+  CPH
+  """Cape Town (-33.97, 18.464)"""
+  CPT
+  """Curitiba (-25.4809, -49.3044)"""
+  CWB
+  """Dallas (32.787, -96.794)"""
+  DAL
+  """Ashburn (Metro) (38.944533, -77.455811)"""
+  DCA
+  """Delhi (28.506912, 77.378557)"""
+  DEL
+  """Denver (39.861656, -104.673178)"""
+  DEN
+  """Dallas (Metro) (32.896828, -97.037997)"""
+  DFW
+  """Detroit (42.448, -83.263)"""
+  DTW
+  """Dublin (53.35, -6.26)"""
+  DUB
+  """Dubai (25.032, 55.19)"""
+  DXB
+  """Newark (40.736844, -74.173402)"""
+  EWR
+  """Buenos Aires (-34.815, -58.5348)"""
+  EZE
+  """Rome (41.89891, 12.51206)"""
+  FCO
+  """Fujairah Al Mahta (25.112225, 56.323964)"""
+  FJR
+  """Fortaleza (-3.735, -38.458)"""
+  FOR
+  """Frankfurt (Metro) (50.026421, 8.543125)"""
+  FRA
+  """Atlanta (33.636719, -84.428067)"""
+  FTY
+  """Rio de Janeiro (-22.81341, -43.249423)"""
+  GIG
+  """Gainesville (29.6516, -82.3248)"""
+  GNV
+  """Sao Paulo (Metro) (-23.432075, -46.469511)"""
+  GRU
+  """Helsinki (60.1699, 24.9384)"""
+  HEL
+  """Hong Kong (22.308919, 113.914603)"""
+  HKG
+  """Tokyo (35.622281, 139.748426)"""
+  HND
+  """Honolulu (21.364, -157.869)"""
+  HNL
+  """Hyderabad (17.442, 78.378)"""
+  HYD
+  """Ashburn (Metro) (38.944533, -77.455811)"""
+  IAD
+  """Houston (29.99022, -95.336783)"""
+  IAH
+  """Seoul (36.38, 128.124)"""
+  ICN
+  """Osaka (34.785528, 135.438222)"""
+  ITM
+  """Johannesburg (-26.13778, 28.19756)"""
+  JNB
+  """Kuala Lumpur (3.149, 101.706)"""
+  KUL
+  """Columbus (40.116, -83.002)"""
+  LCK
+  """London (51.505278, 0.055278)"""
+  LCY
+  """New York City (40.639751, -73.778925)"""
+  LGA
+  """Los Angeles (Metro) (33.942536, -118.408075)"""
+  LGB
+  """London (51.4775, -0.461389)"""
+  LHR
+  """Lima (-12.088902, -76.973405)"""
+  LIM
+  """Milan (45.47, 9.036)"""
+  LIN
+  """Lisbon (38.788, -9.123)"""
+  LIS
+  """London (51.499, -0.011)"""
+  LON
+  """Chennai (12.9941, 80.1709)"""
+  MAA
+  """Madrid (40.439323, -3.621211)"""
+  MAD
+  """Manchester (53.4808, -2.2426)"""
+  MAN
+  """Kansas City (39.101, -94.581)"""
+  MCI
+  """Melbourne (-37.673333, 144.843333)"""
+  MEL
+  """Miami (25.79325, -80.290556)"""
+  MIA
+  """Manila (14.566, 121.022)"""
+  MNL
+  """Marseille (43.311, 5.373)"""
+  MRS
+  """Minneapolis (44.971401, -93.254501)"""
+  MSP
+  """Munich (48.143, 11.555)"""
+  MUC
+  """Milan (45.4642, 9.19)"""
+  MXP
+  """Tokyo (Metro) (35.617, 139.748)"""
+  NRT
+  """New York City (Metro) (40.778, -74.073)"""
+  NYC
+  """Oslo (59.922, 10.809)"""
+  OSL
+  """Palo Alto (37.454965, -122.110783)"""
+  PAO
+  """Paris (Metro) (48.856654, 2.38532)"""
+  PAR
+  """Atlanta (33.876819, -84.302921)"""
+  PDK
+  """Portland (45.552, -122.914)"""
+  PDX
+  """Perth (-31.940278, 115.966944)"""
+  PER
+  """Phoenix (33.396, -111.97)"""
+  PHX
+  """Palermo (38.1607109, 13.3157489)"""
+  PMO
+  """Singapore (1.350189, 103.994433)"""
+  QPG
+  """Santiago (-33.3936, -70.7935)"""
+  SCL
+  """San Jose (37.3626, -121.929022)"""
+  SJC
+  """Sofia (42.703, 23.306)"""
+  SOF
+  """St.Louis (38.629, -90.197)"""
+  STL
+  """Minneapolis (44.971401, -93.254501)"""
+  STP
+  """Sydney (-33.946111, 151.177222)"""
+  SYD
+  """Tokyo (35.617, 139.748)"""
+  TYO
+  """Vienna (48.269, 16.41)"""
+  VIE
+  """Ashburn (39.022, -77.451)"""
+  WDC
+  """Frankfurt - Interxion (50.11975, 8.738472)"""
+  WIE
+  """Wellington (-41.327221, 174.805278)"""
+  WLG
+  """San Jose (37.242, -121.782)"""
+  WVI
+  """Montreal (45.497497, -73.570959)"""
+  YUL
+  """Vancouver (49.1967, -123.1815)"""
+  YVR
+  """Calgary (51.047, -114.08)"""
+  YYC
+  """Toronto (43.677223, -79.630556)"""
+  YYZ
+}
+
+type ErrorsRequest {
+  age: Int
+  bytesRead: Float!
+  bytesReadFromOrigin: Float!
+  bytesWritten: Float!
+  bytesWrittenFromOrigin: Float!
+  cacheState: CacheState!
+  customAttributes: [StringMapEntry!]
+  edgeLocation: EdgeLocation
+  graphQLErrorResponse: String
+  hasError: Boolean!
+  hasGraphQLError: Boolean!
+  httpErrorResponseBodies: [String!]
+  httpErrorResponseStatuses: [Int!]
+  id: ID!
+  latency: Int!
+  maxAge: Int
+  method: String!
+  referer: String
+  region: String!
+  requestType: RequestType
+  scopes: [String!]!
+  status: Int!
+  swr: Int
+  timestamp: DateTime
+  usedBandwidth: Float!
+  variables: String
+}
+
+"""The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."""
+scalar Json
+
+type Metrics {
+  byBrowser(after: String, first: Int!): MetricsByBrowserConnection
+  byContinent: MetricsByContinentConnection
+  byCountry(after: String, first: Int!): MetricsByCountryConnection
+  byCustomAttribute(after: String, first: Int!): MetricsByCustomAttributeConnection
+  byCustomAttributeValue(after: String, first: Int!, name: String!): MetricsByCustomAttributeValueConnection
+  byDeviceCategory(after: String, first: Int!): MetricsByDeviceCategoryConnection
+  byErrorCode(after: String, first: Int!, sort: MetricsSort): MetricsByErrorCodeConnection
+  byField(after: String, fields: [String!], first: Int!, sort: MetricsSort, unusedFields: Boolean): MetricsByFieldConnection
+  byGraphqlClient(after: String, first: Int!, sort: MetricsSort): MetricsByGraphqlClientConnection
+  byGraphqlClientVersion(after: String, first: Int!, sort: MetricsSort): MetricsByGraphqlClientVersionConnection
+  byOperation(after: String, first: Int!, groupByOperationName: Boolean, operationKind: OperationKind, sort: MetricsSort): MetricsByOperationConnection
+  byTypeName(after: String, first: Int!, sort: MetricsSort, unusedTypes: Boolean): MetricsByTypeNameConnection
+  end: DateTime!
+  errors(after: String, first: Int!, sortBy: MetricsErrorsSortBy! = TIMESTAMP, sortDirection: SortDirection! = DESC): MetricsErrorsConnection
+  requests(after: String, first: Int!, sortBy: MetricsRequestSortBy! = TIMESTAMP, sortDirection: SortDirection! = DESC): MetricsRequestsConnection
+  start: DateTime!
+  summary: MetricsGroupedRow
+}
+
+type MetricsByBrowserConnection {
+  edges: [MetricsByBrowserConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsByBrowserConnectionEdge {
+  cursor: String!
+  node: MetricsGroupedRow!
+  userAgentBrowser: String!
+}
+
+type MetricsByContinentConnection {
+  edges: [MetricsByContinentConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsByContinentConnectionEdge {
+  continent: ContinentCode!
+  cursor: String!
+  node: MetricsGroupedRow!
+}
+
+type MetricsByCountryConnection {
+  edges: [MetricsByCountryConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsByCountryConnectionEdge {
+  country: CountryCode!
+  cursor: String!
+  node: MetricsGroupedRow!
+}
+
+type MetricsByCustomAttributeConnection {
+  edges: [MetricsByCustomAttributeConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsByCustomAttributeConnectionEdge {
+  cursor: String!
+  customAttribute: String!
+  node: MetricsGroupedRow!
+}
+
+type MetricsByCustomAttributeValueConnection {
+  edges: [MetricsByCustomAttributeValueConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsByCustomAttributeValueConnectionEdge {
+  cursor: String!
+  customAttributeValue: String!
+  node: MetricsGroupedRow!
+}
+
+type MetricsByDeviceCategoryConnection {
+  edges: [MetricsByDeviceCategoryConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsByDeviceCategoryConnectionEdge {
+  cursor: String!
+  node: MetricsGroupedRow!
+  userAgentDeviceCategory: String!
+}
+
+type MetricsByErrorCodeConnection {
+  edges: [MetricsByErrorCodeConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsByErrorCodeConnectionEdge {
+  cursor: String!
+  errorCode: String!
+  node: MetricsGroupedRow!
+}
+
+type MetricsByFieldConnection {
+  edges: [MetricsByFieldConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type MetricsByFieldConnectionEdge {
+  cursor: String!
+  node: MetricsGroupedRow!
+  typeName: String!
+}
+
+type MetricsByGraphqlClientConnection {
+  edges: [MetricsByGraphqlClientConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type MetricsByGraphqlClientConnectionEdge {
+  cursor: String!
+  graphqlClientName: String!
+  node: MetricsGroupedRow!
+}
+
+type MetricsByGraphqlClientVersionConnection {
+  edges: [MetricsByGraphqlClientVersionConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type MetricsByGraphqlClientVersionConnectionEdge {
+  cursor: String!
+  graphqlClientVersion: String!
+  node: MetricsGroupedRow!
+}
+
+type MetricsByOperationConnection {
+  edges: [MetricsByOperationConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type MetricsByOperationConnectionEdge {
+  cursor: String!
+  node: MetricsGroupedRow!
+  operationName: String!
+  """Number of different operations with the same name found in the time window"""
+  permutationCount: Int!
+}
+
+type MetricsByTypeNameConnection {
+  edges: [MetricsByTypeNameConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type MetricsByTypeNameConnectionEdge {
+  cursor: String!
+  node: MetricsGroupedRow!
+  typeName: String!
+}
+
+type MetricsErrorsConnection {
+  edges: [MetricsErrorsConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsErrorsConnectionEdge {
+  cursor: String!
+  node: ErrorsRequest!
+}
+
+enum MetricsErrorsSortBy {
+  ERROR_CODE
+  TIMESTAMP
+}
+
+type MetricsGroupedRow {
+  age: Int
+  bytesRead: Float!
+  bytesReadFromOrigin: Float!
+  bytesWritten: Float!
+  bytesWrittenFromOrigin: Float!
+  cacheHitRate: Float!
+  cachedBandwidth: Float!
+  """The amount of bandwidth that can be cached but has not been cached. Calculated according to the Max CHR."""
+  cachingOpportunityBandwidth: Float!
+  """The amount of egress bandwidth that can be cached but has not been cached. Calculated according to the Max CHR."""
+  cachingOpportunityEgress: Float!
+  count: Int!
+  """Number of queries that could be cached, but are not configured to be cached"""
+  countCachingOpportunities: Int!
+  countErrors: Int!
+  countGraphQLErrors: Int!
+  countHits: Int!
+  countHttp4XXErrors: Int!
+  countHttp5XXErrors: Int!
+  countHttpErrors: Int!
+  """Number of queries that were logged through our metrics logging endpoint"""
+  countMetricsLogging: Int!
+  countMisses: Int!
+  countPartials: Int!
+  countPasses: Int!
+  errorRate: Float!
+  maxAge: Int
+  nonCacheableBandwidth: Float!
+  """Latency for cache misses or passes. Returns null if no requests within time grouping"""
+  quantileLatencyCold(value: Int!): Int
+  """Latency for cache hits. Returns null if no requests within time grouping"""
+  quantileLatencyHot(value: Int!): Int
+  status: Int!
+  swr: Int
+  timestamp: DateTime
+  uncachedBandwidth: Float!
+  uniqueUsers: Int!
+  usedBandwidth: Float!
+}
+
+enum MetricsRelativeDate {
+  T_1_DAY_AGO
+  T_1_HOUR_AGO
+  T_1_MONTH_AGO
+  T_1_WEEK_AGO
+  T_2_DAYS_AGO
+  T_4_HOURS_AGO
+  T_15_MINUTES_AGO
+  T_NOW
+}
+
+type MetricsRequest {
+  age: Int
+  bytesRead: Float!
+  bytesReadFromOrigin: Float!
+  bytesWritten: Float!
+  bytesWrittenFromOrigin: Float!
+  cacheState: CacheState!
+  customAttributes: [StringMapEntry!]
+  edgeLocation: EdgeLocation
+  graphQLErrorResponse: String
+  hasError: Boolean!
+  hasGraphQLError: Boolean!
+  httpErrorResponseBodies: [String!]
+  httpErrorResponseStatuses: [Int!]
+  id: ID!
+  latency: Int!
+  maxAge: Int
+  method: String!
+  referer: String
+  region: String!
+  requestType: RequestType
+  scopes: [String!]!
+  status: Int!
+  swr: Int
+  timestamp: DateTime
+  usedBandwidth: Float!
+  variables: String
+}
+
+enum MetricsRequestSortBy {
+  COMPLEXITY
+  COUNT_FIELDS
+  LATENCY
+  TIMESTAMP
+}
+
+type MetricsRequestsConnection {
+  edges: [MetricsRequestsConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MetricsRequestsConnectionEdge {
+  cursor: String!
+  node: MetricsRequest!
+}
+
+input MetricsRequestsFilter {
+  cacheState: CacheStateFilterConstraint
+  configRules: [ConfigRuleFilterConstraint!]
+  consumerGroupId: StringFilterConstraint
+  continent: ContinentCodeFilterConstraint
+  country: CountryCodeFilterConstraint
+  customAttributes: [CustomAttributeFilterConstraint!]
+  error: RequestsErrorKindFilterConstraint
+  errorCode: StringFilterConstraint
+  errorCodes: StringFilterConstraint
+  fieldNames: StringArrayFilterConstraint
+  graphqlClientName: StringFilterConstraint
+  graphqlClientNameAndVersion: StringFilterConstraint
+  graphqlClientVersion: StringFilterConstraint
+  hasError: Boolean
+  hasRetries: Boolean
+  id: StringFilterConstraint
+  isCachingOpportunity: Boolean
+  isGraphQL: Boolean
+  isMetricsLogging: Boolean
+  nonCacheable: [String!]
+  operationKey: StringFilterConstraint
+  operationKind: OperationKindFilterConstraint
+  operationName: StringFilterWithSearchConstraint
+  querySha256: StringFilterConstraint
+  referer: StringFilterConstraint
+  requestType: RequestTypeFilterConstraint
+  scopes: StringFilterConstraint
+  status: StringFilterConstraint
+  typeNames: StringArrayFilterConstraint
+  userAgent: StringFilterConstraint
+  userAgentBrowser: StringFilterConstraint
+  userAgentDeviceCategory: StringFilterConstraint
+}
+
+input MetricsSort {
+  by: MetricsSortBy!
+  direction: SortDirection
+}
+
+enum MetricsSortBy {
+  AGE
+  BYTES_READ
+  BYTES_WRITTEN
+  CACHED_BANDWIDTH
+  CACHE_HIT_RATE
+  CACHING_OPPORTUNITY_BANDWIDTH
+  CACHING_OPPORTUNITY_EGRESS
+  CHR_IMPACT
+  CONTINENT
+  COUNT
+  COUNTRY
+  COUNT_ERRORS
+  COUNT_FIELDS
+  COUNT_GRAPHQL_CLIENT
+  COUNT_GRAPHQL_CLIENT_VERSION
+  COUNT_HITS
+  COUNT_IP
+  COUNT_MISSES
+  COUNT_PARTIALS
+  COUNT_PASSES
+  EDGE_LOCATION
+  ERROR_CODE
+  ERROR_CODES
+  ERROR_RATE
+  FIELD_NAME
+  GRAPHQL_CLIENT_NAME
+  GRAPHQL_CLIENT_NAME_AND_VERSION
+  GRAPHQL_CLIENT_VERSION
+  LAST_SEEN
+  LATENCY
+  MAX_AGE
+  MAX_THEORETICAL_CACHE_HIT_RATE
+  NON_CACHED_BANDWIDTH
+  OPERATION_NAME
+  QUANTILE_COMPLEXITY
+  QUANTILE_LATENCY_COLD
+  QUANTILE_LATENCY_HOT
+  REGION
+  SWR
+  TIMESTAMP
+  TYPE_NAME
+  UNCACHED_BANDWIDTH
+  USED_BANDWIDTH
+}
+
+input MetricsTimeIntervalFilter {
+  from: DateTime
+  fromRelative: MetricsRelativeDate
+  to: DateTime
+  toRelative: MetricsRelativeDate
+}
+
+type Mutation {
+  """Remove one allowed operations from your Stellate service."""
+  removePersistedOperation(persistedOperationId: ID!, serviceId: ID!): Service!
+  """Let us know how you are using our API, or how we can make it better for you!
+
+You can also get in touch via our discord server: https://discord.com/invite/ZyH8MYFzrF
+or by clicking the Chat Icon in the lower right corner on our website."""
+  submitApiFeedback(input: SubmitApiFeedbackInput!): Boolean!
+  """Add multiple allowed operations to your Stellate service."""
+  uploadPersistedOperations(persistedOperations: [PersistedOperationsInput!]!, serviceId: ID!): Service!
+}
+
+input NegatedCacheStateFilterConstraint {
+  in: [CacheState!]
+}
+
+input NegatedContinentCodeFilterConstraint {
+  in: [ContinentCode!]
+}
+
+input NegatedCountryCodeFilterConstraint {
+  in: [CountryCode!]
+}
+
+input NegatedErrorFilterConstraint {
+  in: [RequestsErrorKind!]
+}
+
+input NegatedOperationKindFilterConstraint {
+  equal: OperationKind
+}
+
+input NegatedRequestTypeFilterConstraint {
+  in: [RequestType!]
+}
+
+input NegatedStringArrayFilterConstraint {
+  all: [String!]
+  any: [String!]
+}
+
+input NegatedStringFilterConstraint {
+  equal: String
+  in: [String!]
+  isNull: Boolean
+}
+
+interface Node {
+  id: ID!
+}
+
+enum OperationKind {
+  MUTATION
+  QUERY
+}
+
+input OperationKindFilterConstraint {
+  NOT: NegatedOperationKindFilterConstraint
+  equal: OperationKind
+}
+
+"""Organizations are the root level entity that contains Services and grants Users access to them."""
+type Organization implements Node {
+  id: ID!
+  name: String!
+  services(after: String, before: String, filter: ServiceFilter, first: Int, last: Int): OrganizationServicesConnection!
+  slug: String!
+}
+
+type OrganizationServicesConnection {
+  edges: [OrganizationServicesConnectionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type OrganizationServicesConnectionEdge {
+  cursor: String!
+  node: Service
+}
+
+type OrganizationsConnection {
+  edges: [OrganizationsConnectionEdge]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type OrganizationsConnectionEdge {
+  cursor: String!
+  node: Organization!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
+"""An operation that is allowed to be sent as a hash to the CDN, the CDN will internally translate this hash for the caching/purging translation and metrics."""
+type PersistedOperation implements Node {
+  createdAt: DateTime!
+  hash: String!
+  id: ID!
+  lastSeen: DateTime
+  operationName: String!
+  query: String!
+  updatedAt: DateTime!
+}
+
+input PersistedOperationsInput {
+  hash: String!
+  query: String!
+}
+
+type Query {
+  alert(id: ID!): Alert
+  organization(id: ID, slug: String): Organization
+  """Retrieves all `Organization`s the currently authenticated user is a member of."""
+  organizations(after: String, before: String, first: Int, last: Int): OrganizationsConnection
+  service(name: ServiceName!): Service
+}
+
+"""Indicates the type of the request, if it was a normal GQL request, Automatic Persisted Query, or Persisted Operation."""
+enum RequestType {
+  APQ
+  NORMAL
+  PO
+}
+
+input RequestTypeFilterConstraint {
+  NOT: NegatedRequestTypeFilterConstraint
+  equal: RequestType
+  in: [RequestType!]
+}
+
+enum RequestsErrorKind {
+  GRAPHQL
+  STATUS_CODE_4XX
+  STATUS_CODE_5XX
+}
+
+input RequestsErrorKindFilterConstraint {
+  NOT: NegatedErrorFilterConstraint
+  equal: RequestsErrorKind
+  in: [RequestsErrorKind!]
+}
+
+"""A service represents a configuration for a single origin service, belonging to an `Organization`"""
+type Service implements Node {
+  """The URI of the origin endpoint that is shielded by this `Service`"""
+  cdnEndpoint: String!
+  id: ID!
+  metrics(filter: MetricsRequestsFilter, timeInterval: MetricsTimeIntervalFilter): Metrics!
+  name: ServiceName!
+  organization: Organization
+  persistedOperations(after: String, before: String, first: Int, last: Int): ServicePersistedOperationsConnection!
+}
+
+input ServiceFilter {
+  field: ServiceFilterField!
+  value: String!
+}
+
+enum ServiceFilterField {
+  NAME
+}
+
+"""A case-insensitive name for a Stellate service, which must be a valid subdomain on *.stellate.sh or *.graphcdn.app"""
+scalar ServiceName
+
+type ServicePersistedOperationsConnection {
+  edges: [ServicePersistedOperationsConnectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type ServicePersistedOperationsConnectionEdge {
+  cursor: String!
+  node: PersistedOperation!
+}
+
+enum SortDirection {
+  ASC
+  DESC
+}
+
+input StringArrayFilterConstraint {
+  NOT: NegatedStringArrayFilterConstraint
+  all: [String!]
+  any: [String!]
+  search: String
+}
+
+input StringFilterConstraint {
+  NOT: NegatedStringFilterConstraint
+  equal: String
+  in: [String!]
+  isNull: Boolean
+}
+
+input StringFilterWithSearchConstraint {
+  NOT: NegatedStringFilterConstraint
+  equal: String
+  in: [String!]
+  isNull: Boolean
+  search: String
+}
+
+type StringMapEntry {
+  key: String!
+  value: String!
+}
+
+input SubmitApiFeedbackInput {
+  email: String!
+  feedback: String!
+}
+
+"""A `User` represents an active account profile within Stellate."""
+type User implements Node {
+  id: ID!
+}

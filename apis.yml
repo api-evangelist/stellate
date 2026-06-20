@@ -7,7 +7,7 @@ description: |
   edge caching, real-time metrics and insights, rate limiting, and security
   features to help teams scale, protect, and optimize their GraphQL APIs.
 type: Index
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://stellate.co
 baseURL: https://graph.stellate.co
 created: 2026-06-14
@@ -32,7 +32,7 @@ apis:
       reliability during early access.
     tags:
       - GraphQL
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://stellate.co/docs/reference/public-api
     baseURL: https://graph.stellate.co
     properties:

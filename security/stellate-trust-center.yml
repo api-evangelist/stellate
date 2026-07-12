@@ -1,0 +1,12 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://stellate.co/trust
+url: https://stellate.co/trust
+certifications:
+- SOC 2
+evidence:
+- source: https://stellate.co/trust
+  keywords:
+  - soc2
+  - trust center

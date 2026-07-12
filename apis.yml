@@ -41,6 +41,12 @@ apis:
       - url: graphql/stellate-graphql.md
         type: GraphQL
 common:
+  - type: TrustCenter
+    url: security/stellate-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/stellate-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/stellate-domain-security.yml
   - url: https://stellate.co
     type: Website
   - url: https://stellate.co/docs
@@ -57,6 +63,8 @@ common:
     type: RateLimits
   - url: finops/stellate-finops.md
     type: FinOps
+  - url: https://stellate.co/blog
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
